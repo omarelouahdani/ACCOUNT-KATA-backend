@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.sid.sgbankbackend.dto.AccountHistoryDTO;
 import org.sid.sgbankbackend.dto.AccountOperationDTO;
@@ -154,7 +153,7 @@ class AccountServiceImplTest {
                 () -> accountService.getAccountHistory(accountId)
         );
 
-        assertEquals("Account not Found", exception.getMessage());
+        assertEquals("Account not found", exception.getMessage());
     }
 
     private void initMockData() {

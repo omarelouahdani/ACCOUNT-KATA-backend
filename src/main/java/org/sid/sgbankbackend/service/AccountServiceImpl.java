@@ -13,7 +13,6 @@ import org.sid.sgbankbackend.model.Account;
 import org.sid.sgbankbackend.model.AccountOperation;
 import org.sid.sgbankbackend.model.Customer;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
  * Implementation of the AccountService interface, handling account-related operations.
  */
 @Service
-@Transactional
 @AllArgsConstructor
 @Data
 @Slf4j
