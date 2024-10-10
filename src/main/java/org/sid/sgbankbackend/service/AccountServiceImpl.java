@@ -11,10 +11,10 @@ import org.sid.sgbankbackend.exceptions.AccountNotFoundException;
 import org.sid.sgbankbackend.mapper.AccountMapperImpl;
 import org.sid.sgbankbackend.model.Account;
 import org.sid.sgbankbackend.model.AccountOperation;
-import org.sid.sgbankbackend.repositories.AccountOperationRepository;
-import org.sid.sgbankbackend.repositories.AccountRepository;
+import org.sid.sgbankbackend.model.Customer;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,49 +27,64 @@ import java.util.stream.Collectors;
 @Data
 @Slf4j
 public class AccountServiceImpl implements AccountService {
-    private AccountRepository accountRepository;
-    private AccountOperationRepository accountOperationRepository;
+
+    private List<Customer> customers = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
+    private List<AccountOperation> accountOperations = new ArrayList<>();
+    private DataAccountService dataAccountService;
     private AccountMapperImpl dtoMapper;
 
     @Override
     public void deposit(String accountId, double amount, String description) throws AccountNotFoundException {
-        Account bankAccount = accountRepository.findById(accountId)
-                .orElseThrow(() -> new AccountNotFoundException("BankAccount not found"));
+        Account bankAccount = findAccountById(accountId);
         AccountOperation accountOperation = createAccountOperation(OperationType.DEPOSIT, amount, description, bankAccount);
-        accountOperationRepository.save(accountOperation);
         bankAccount.setBalance(bankAccount.getBalance() + amount);
         bankAccount.getAccountOperations().add(accountOperation);
-        accountRepository.save(bankAccount);
     }
 
     @Override
     public void withdraw(String accountId, double amount, String description) throws BalanceNotSufficientException, AccountNotFoundException {
-        Account bankAccount = accountRepository.findById(accountId)
-                .orElseThrow(() -> new AccountNotFoundException("BankAccount not found"));
-
+        Account bankAccount = findAccountById(accountId);
         if (bankAccount.getBalance() < amount) {
             throw new BalanceNotSufficientException("Balance not sufficient");
         }
         AccountOperation accountOperation = createAccountOperation(OperationType.WITHDRAW, amount, description, bankAccount);
-        accountOperationRepository.save(accountOperation);
         bankAccount.setBalance(bankAccount.getBalance() - amount);
         bankAccount.getAccountOperations().add(accountOperation);
-        accountRepository.save(bankAccount);
     }
 
     @Override
     public AccountHistoryDTO getAccountHistory(String accountId) throws AccountNotFoundException {
-        Account bankAccount = accountRepository.findById(accountId).orElse(null);
-        if (bankAccount == null) throw new AccountNotFoundException("Account not Found");
+        Account bankAccount = findAccountById(accountId);
         List<AccountOperationDTO> accountOperationDTOS = bankAccount.getAccountOperations()
                 .stream()
                 .map(dtoMapper::fromAccountOperation)
                 .collect(Collectors.toList());
+
         AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO();
         accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
         accountHistoryDTO.setAccountId(bankAccount.getId());
         accountHistoryDTO.setBalance(bankAccount.getBalance());
         return accountHistoryDTO;
+    }
+
+    @Override
+    public void initData() {
+        dataAccountService.initData(customers, accounts, accountOperations);
+    }
+
+    /**
+     * Finds an account by its ID.
+     *
+     * @param accountId The ID of the account to find.
+     * @return The found Account.
+     * @throws AccountNotFoundException If no account is found with the given ID.
+     */
+    private Account findAccountById(String accountId) throws AccountNotFoundException {
+        return accounts.stream()
+                .filter(account -> account.getId().equals(accountId))
+                .findAny()
+                .orElseThrow(() -> new AccountNotFoundException("Account not found"));
     }
 
     /**
