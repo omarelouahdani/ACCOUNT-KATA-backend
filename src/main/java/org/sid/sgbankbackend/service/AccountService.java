@@ -39,9 +39,4 @@ public interface AccountService {
      */
     AccountHistoryDTO getAccountHistory(String accountId) throws AccountNotFoundException;
 
-    /**
-     * Initializes the data for accounts, customers, and operations.
-     */
-    void initData();
-
 }
