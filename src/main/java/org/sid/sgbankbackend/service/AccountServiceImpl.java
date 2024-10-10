@@ -11,8 +11,8 @@ import org.sid.sgbankbackend.exceptions.AccountNotFoundException;
 import org.sid.sgbankbackend.mapper.AccountMapperImpl;
 import org.sid.sgbankbackend.model.Account;
 import org.sid.sgbankbackend.model.AccountOperation;
-import org.sid.sgbankbackend.repositories.AccountOperationRepository;
-import org.sid.sgbankbackend.repositories.AccountRepository;
+import org.sid.sgbankbackend.repository.AccountOperationRepository;
+import org.sid.sgbankbackend.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

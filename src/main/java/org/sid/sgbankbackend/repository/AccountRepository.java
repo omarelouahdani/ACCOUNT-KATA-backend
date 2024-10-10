@@ -1,4 +1,4 @@
-package org.sid.sgbankbackend.repositories;
+package org.sid.sgbankbackend.repository;
 
 import org.sid.sgbankbackend.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

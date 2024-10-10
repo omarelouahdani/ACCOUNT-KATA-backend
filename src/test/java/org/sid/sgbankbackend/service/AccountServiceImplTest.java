@@ -16,8 +16,8 @@ import org.sid.sgbankbackend.mapper.AccountMapperImpl;
 import org.sid.sgbankbackend.model.Account;
 import org.sid.sgbankbackend.model.AccountOperation;
 import org.sid.sgbankbackend.model.Customer;
-import org.sid.sgbankbackend.repositories.AccountOperationRepository;
-import org.sid.sgbankbackend.repositories.AccountRepository;
+import org.sid.sgbankbackend.repository.AccountOperationRepository;
+import org.sid.sgbankbackend.repository.AccountRepository;
 
 import java.util.ArrayList;
 import java.util.Date;

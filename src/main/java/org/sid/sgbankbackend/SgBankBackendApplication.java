@@ -3,9 +3,9 @@ package org.sid.sgbankbackend;
 
 import org.sid.sgbankbackend.initialization.MemoryDataInitializer;
 import org.sid.sgbankbackend.model.AccountOperation;
-import org.sid.sgbankbackend.repositories.AccountOperationRepository;
-import org.sid.sgbankbackend.repositories.AccountRepository;
-import org.sid.sgbankbackend.repositories.CustomerRepository;
+import org.sid.sgbankbackend.repository.AccountOperationRepository;
+import org.sid.sgbankbackend.repository.AccountRepository;
+import org.sid.sgbankbackend.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
