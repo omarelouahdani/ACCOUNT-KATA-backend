@@ -76,7 +76,7 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(ar -> ar.requestMatchers("/auth/login/**").permitAll())
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/console-h2/**").permitAll())
+                .authorizeHttpRequests(ar -> ar.requestMatchers("/h2-console/**").permitAll())
                 .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
                 .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
                 .build();
