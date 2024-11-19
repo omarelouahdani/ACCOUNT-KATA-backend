@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,8 @@ import java.util.Map;
  * This controller provides endpoints for user login and generates JWT tokens.
  */
 @RestController
-@RequestMapping("/auth") // Base URL for authentication-related endpoints
+@RequestMapping("/auth")
+@CrossOrigin("*")// Base URL for authentication-related endpoints
 public class SecurityController {
 
     @Autowired
